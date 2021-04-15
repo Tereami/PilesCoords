@@ -34,8 +34,9 @@ namespace PilesCoords
         public static string paramRangeWithElevation = "Орг.ДиапазонПозиций2";
 
         public static string paramSlabBottomElev = "Рзм.ОтметкаНизаПлиты";
-
         public static string paramPileCutHeigth = "Высота срубаемой части";
+        public static string paramPlacementElevation = "Рзм.ОтметкаРасположения";
+        public static string paramPileTypeNumber = "N типа рядовой (1-10)";
 
 
         public static bool sortByBottomElev_Table1 = false;

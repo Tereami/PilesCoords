@@ -14,9 +14,7 @@ Zuev Aleksandr, 2020, all rigths reserved.*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autodesk.Revit.UI;
+using System.Diagnostics;
 using Autodesk.Revit.DB;
 #endregion
 
@@ -28,6 +26,25 @@ namespace PilesCoords
     /// </summary>
     public class Support
     {
+        public static Parameter GetParameter(Element elem, string paramname, bool checkForWritable = false)
+        {
+            Parameter param = elem.LookupParameter(paramname);
+            if(param == null)
+            {
+                ElementType etype = elem.Document.GetElement(elem.GetTypeId()) as ElementType;
+                param = etype.LookupParameter(paramname);
+                if (param == null)
+                {
+                    Debug.WriteLine("No parameter: " + paramname);
+                }
+            }
+            if(checkForWritable && param.IsReadOnly)
+            {
+                Debug.WriteLine("Parameter is readonly: " + paramname);
+            }
+            return param;
+        }
+
         public static XYZ GetTopPoint(List<XYZ> points)
         {
             XYZ topPoint = points[0];
@@ -59,11 +76,13 @@ namespace PilesCoords
 
         public static List<FamilyInstance> GetPiles(List<Element> elems)
         {
+            Debug.WriteLine("Search piles by name: " + Settings.pileFamilyName);
             List<FamilyInstance> piles = elems
                 .Where(i => i is FamilyInstance)
                 .Cast<FamilyInstance>()
                 .Where(i => i.Symbol.FamilyName == Settings.pileFamilyName)
                 .ToList();
+            Debug.WriteLine("Piles found: " + piles.Count.ToString());
             return piles;
         }
 
@@ -82,7 +101,7 @@ namespace PilesCoords
 
                 keysAndRange.Add(key, range);
             }
-
+            Debug.WriteLine("Mark ranges are created by keys: " + keysAndRange.Count.ToString());
             return keysAndRange;
         }
 
@@ -109,18 +128,19 @@ namespace PilesCoords
                 }
             }
             range += marks[marks.Count - 1];
-
+            Debug.WriteLine("Marks range: " + range);
             return range;
         }
 
         public static ImageType GetImageTypeByName(Document doc, string name)
         {
+            Debug.WriteLine("Try to get image by name: " + name);
             List<ImageType> images = new FilteredElementCollector(doc)
                 .OfClass(typeof(ImageType))
                 .Cast<ImageType>()
                 .Where(i => i.Name.Equals(name))
                 .ToList();
-
+            Debug.WriteLine("Try to find image by name: " + name + ", found: " + images.Count.ToString());
             if (images.Count == 0)
             {
                 List<ImageType> errImgs = new FilteredElementCollector(doc)
@@ -130,14 +150,17 @@ namespace PilesCoords
                     .ToList();
                 if (errImgs.Count == 0)
                 {
-                    throw new Exception("Загрузите в проект картинки для свай!");
+                    System.Windows.Forms.MessageBox.Show("Загрузите в проект картинки для свай!");
+                    Debug.WriteLine("Unable to find image Ошибка.png");
+                    throw new Exception("Unable to find image Ошибка.png");
                 }
 
                 ImageType errImg = errImgs.First();
                 return errImg;
             }
-
-            return images.First();
+            ImageType it = images.First();
+            Debug.WriteLine("Image is found, id: " + it.Id.IntegerValue.ToString());
+            return it;
         }
 
 
@@ -146,24 +169,22 @@ namespace PilesCoords
         {
             int isAnker = pile.LookupParameter("Анкерная").AsInteger();
             int isTested = pile.LookupParameter("Испытуемая").AsInteger();
-
-            if (isAnker != 0 && isTested == 0) return "А";
-            if (isAnker == 0 && isTested != 0) return "И";
-
-            return "Р";
+            string prefix = "Р";
+            if (isAnker != 0 && isTested == 0) prefix = "А";
+            if (isAnker == 0 && isTested != 0) prefix = "И";
+            Debug.WriteLine("Pile id " + pile.Id.IntegerValue.ToString() + " prefix = " + prefix);
+            return prefix;
         }
 
         public static string GetPileUsesText(Element pile)
         {
             int isAnker = pile.LookupParameter("Анкерная").AsInteger();
             int isTested = pile.LookupParameter("Испытуемая").AsInteger();
-
-            if (isAnker != 0 && isTested == 0) return "Анкеруемая";
-            if (isAnker == 0 && isTested != 0) return "Подвергается стат. испытанию";
-
-            return "Рядовая";
+            string uses = "Рядовая";
+            if (isAnker != 0 && isTested == 0) uses = "Анкеруемая";
+            if (isAnker == 0 && isTested != 0) uses = "Подвергается стат. испытанию";
+            Debug.WriteLine("Pile id " + pile.Id.IntegerValue.ToString() + " uses = " + uses);
+            return uses;
         }
-
     }
-
 }

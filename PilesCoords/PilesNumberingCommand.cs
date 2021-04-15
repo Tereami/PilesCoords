@@ -14,8 +14,7 @@ Zuev Aleksandr, 2020, all rigths reserved.*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
@@ -29,13 +28,15 @@ namespace PilesCoords
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            Debug.Listeners.Clear();
+            Debug.Listeners.Add(new RbsLogger.Logger("PilesNumbering"));
             Document doc = commandData.Application.ActiveUIDocument.Document;
 
             Selection sel = commandData.Application.ActiveUIDocument.Selection;
             List<Element> selems = sel.GetElementIds().Select(i => doc.GetElement(i)).ToList();
 
             List<FamilyInstance> piles = Support.GetPiles(selems);
-
+            Debug.WriteLine("Selected piles count: " + piles.Count.ToString());
             if (piles.Count == 0)
             {
                 message = "Выберите сваи.";
@@ -49,7 +50,7 @@ namespace PilesCoords
                 .OrderBy(x => numberingUpDown * Math.Round((x.Location as LocationPoint).Point.Y))
                 .ThenBy(x => Math.Round((x.Location as LocationPoint).Point.X))
                 .ToList();
-
+            Debug.WriteLine("Parameter for number: " + Settings.paramPilePosition);
             //Указываю позиции по координатам
             using (Transaction t = new Transaction(doc))
             {
@@ -57,11 +58,11 @@ namespace PilesCoords
                 for (int i = 0; i < pilesSorted.Count; i++)
                 {
                     Element pile = pilesSorted[i];
-                    pile.LookupParameter(Settings.paramPilePosition).Set((i + 1).ToString());
+                    Support.GetParameter(pile, Settings.paramPilePosition, true).Set((i + 1).ToString());
                 }
                 t.Commit();
             }
-
+            Debug.WriteLine("Numbering success");
             return Result.Succeeded;
         }
     }

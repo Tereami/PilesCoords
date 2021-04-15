@@ -14,8 +14,7 @@ Zuev Aleksandr, 2020, all rigths reserved.*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
@@ -29,6 +28,8 @@ namespace PilesCoords
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            Debug.Listeners.Clear();
+            Debug.Listeners.Add(new RbsLogger.Logger("PilesElevation"));
             Document doc = commandData.Application.ActiveUIDocument.Document;
 
             Selection sel = commandData.Application.ActiveUIDocument.Selection;
@@ -36,8 +37,7 @@ namespace PilesCoords
 
             List<FamilyInstance> piles = Support.GetPiles(selems);
             List<Element> slabs = selems.Except(piles).ToList();
-
-
+            Debug.WriteLine("Piles count: " + piles.Count.ToString() + ", slabs count: " + slabs.Count.ToString());
             if (piles.Count == 0)
             {
                 message = "Выберите сваи.";
@@ -49,14 +49,12 @@ namespace PilesCoords
                 return Result.Failed;
             }
 
-
             using (Transaction t = new Transaction(doc))
             {
                 t.Start("Отметки свай");
                 foreach (FamilyInstance pile in piles)
                 {
-                    
-
+                    Debug.WriteLine("Current pile id: " + pile.Id.IntegerValue.ToString());
                     XYZ pileTopPointBeforeCut = MyPile.GetPileTopPointBeforeCut(pile);
 
                     XYZ p1 = new XYZ(pileTopPointBeforeCut.X, pileTopPointBeforeCut.Y, pileTopPointBeforeCut.Z - 3000 / 304.8);
@@ -77,18 +75,38 @@ namespace PilesCoords
                     }
 
                     XYZ slabBottomPoint = Support.GetBottomPoint(intersectPointsWithAllSlabs);
-                    pile.LookupParameter(Settings.paramSlabBottomElev).Set(slabBottomPoint.Z);
+                    Debug.WriteLine("SlabBottomPoint Z = " + (slabBottomPoint.Z * 304.8).ToString("F1"));
+                    Parameter elevParam = pile.LookupParameter(Settings.paramSlabBottomElev);
+                    if(elevParam == null)
+                    {
+                        TaskDialog.Show("Ошибка", "Нет параметра " + Settings.paramSlabBottomElev);
+                        message = "No parameter " + Settings.paramSlabBottomElev;
+                        return Result.Failed;
+                    }
+                    elevParam.Set(slabBottomPoint.Z);
 
                     try
                     {
                         XYZ pileBottomPoint = MyPile.GetPileBottomPoint(pile);
-                        pile.LookupParameter("Рзм.ОтметкаРасположения").Set(pileBottomPoint.Z);
+                        Debug.WriteLine("Pile bottom elevation: " + (pileBottomPoint.Z * 304.8).ToString("F2"));
+                        Parameter pileElevParam = pile.LookupParameter(Settings.paramPlacementElevation);
+                        if(pileElevParam == null)
+                        {
+                            Debug.WriteLine("No parameter: " + Settings.paramPlacementElevation);
+                        }
+                        else
+                        {
+                            pileElevParam.Set(pileBottomPoint.Z);
+                        }
                     }
-                    catch { }
-
+                    catch(Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
                 }
                 t.Commit();
             }
+            Debug.WriteLine("Piles elevation succeded");
             return Result.Succeeded;
         }
     }

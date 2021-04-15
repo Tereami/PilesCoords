@@ -14,8 +14,7 @@ Zuev Aleksandr, 2020, all rigths reserved.*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
@@ -29,6 +28,8 @@ namespace PilesCoords
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            Debug.Listeners.Clear();
+            Debug.Listeners.Add(new RbsLogger.Logger("PileCut"));
             Document doc = commandData.Application.ActiveUIDocument.Document;
 
             Selection sel = commandData.Application.ActiveUIDocument.Selection;
@@ -40,11 +41,13 @@ namespace PilesCoords
             if (piles.Count == 0)
             {
                 message = "Выберите сваи.";
+                Debug.WriteLine("Piles arent selected");
                 return Result.Failed;
             }
             if (slabs.Count == 0)
             {
                 message = "Выберите ростверк";
+                Debug.WriteLine("Foundations arent selected");
                 return Result.Failed;
             }
 
@@ -56,6 +59,7 @@ namespace PilesCoords
                 {
                     FamilyInstance pile = pileElement as FamilyInstance;
                     if (pile == null) continue;
+                    Debug.WriteLine("Current pile id: " + pileElement.Id.IntegerValue.ToString());
 
                     XYZ pileBottomPoint = MyPile.GetPileBottomPoint(pile);
                     XYZ pileTopPointBeforeCut = MyPile.GetPileTopPointBeforeCut(pile);
@@ -78,17 +82,22 @@ namespace PilesCoords
                         }
                     }
 
-                    if (intersectPointsWithAllSlabs.Count == 0) continue;
+                    if (intersectPointsWithAllSlabs.Count == 0)
+                    {
+                        Debug.WriteLine("No intersects with foundation");
+                        continue;
+                    }
 
                     XYZ slabBottomPoint = Support.GetBottomPoint(intersectPointsWithAllSlabs);
 
-                    double cutLength = pileTopPointBeforeCut.Z - slabBottomPoint.Z - (Settings.pileDepth/304.8);
-                    pile.LookupParameter(Settings.paramPileCutHeigth).Set(cutLength);
+                    double cutLength = pileTopPointBeforeCut.Z - slabBottomPoint.Z - (Settings.pileDepth / 304.8);
+                    Debug.WriteLine("Cut length: " + (cutLength*304.8).ToString("F2"));
+                    Support.GetParameter(pile, Settings.paramPileCutHeigth, true).Set(cutLength);
 
                 }
                 t.Commit();
             }
-
+            Debug.WriteLine("Success");
             return Result.Succeeded;
         }
     }

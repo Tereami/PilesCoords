@@ -14,8 +14,7 @@ Zuev Aleksandr, 2020, all rigths reserved.*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
@@ -29,7 +28,8 @@ namespace PilesCoords
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-
+            Debug.Listeners.Clear();
+            Debug.Listeners.Add(new RbsLogger.Logger("PilesCalculateRange"));
             Document doc = commandData.Application.ActiveUIDocument.Document;
 
             Selection sel = commandData.Application.ActiveUIDocument.Selection;
@@ -37,8 +37,8 @@ namespace PilesCoords
 
             List<FamilyInstance> piles = Support.GetPiles(selems);
 
-            //piles.Sort(new PileComparer());
-            piles = piles.OrderBy(p => int.Parse(p.LookupParameter(Settings.paramPilePosition).AsString())).ToList();
+            piles = piles.OrderBy(p => int.Parse(Support.GetParameter(p, Settings.paramPilePosition).AsString())).ToList();
+            Debug.WriteLine("Piles found: " + piles.Count.ToString());
 
             if (piles.Count == 0)
             {
@@ -46,27 +46,30 @@ namespace PilesCoords
                 return Result.Failed;
             }
 
-
             Dictionary<string, PileType> pilesKeysAndTypesWithElev = new Dictionary<string, PileType>();
             Dictionary<string, PileType> pilesKeysAndTypes = new Dictionary<string, PileType>();
 
 
             foreach (FamilyInstance pile in piles)
             {
-                string markString = pile.LookupParameter(Settings.paramPilePosition).AsString();
+                Debug.WriteLine("Current pile id: " + pile.Id.IntegerValue.ToString());
+                string markString = Support.GetParameter(pile, Settings.paramPilePosition).AsString();
+
+                Debug.WriteLine("Pile mark: " + markString);
                 int mark = int.Parse(markString);
 
                 string pileUsesPrefix = Support.GetPileUsesPrefix(pile);
 
                 double pileBottomElev =  MyPile.GetPileBottomPoint(pile).Z;
 
-                double pileLengthAfterCut = pile.LookupParameter(Settings.paramPileLengthAfterCut).AsDouble();
+                double pileLengthAfterCut = Support.GetParameter(pile, Settings.paramPileLengthAfterCut).AsDouble();
                 double pileTopElevAfterCut = Math.Round((pileBottomElev + pileLengthAfterCut) * 304.8);
 
                 pileBottomElev = Math.Round(pileBottomElev * 304.8);
-                double slabBottomElev = Math.Round(pile.LookupParameter(Settings.paramSlabBottomElev).AsDouble() * 304.8);
-                double pileTopElevBeforeCut = Math.Round(MyPile.GetPileTopPointBeforeCut(pile).Z * 304.8);
 
+                double slabBottomElev = Support.GetParameter(pile, Settings.paramSlabBottomElev).AsDouble();
+                slabBottomElev = Math.Round(slabBottomElev * 304.8);
+                double pileTopElevBeforeCut = Math.Round(MyPile.GetPileTopPointBeforeCut(pile).Z * 304.8);
 
                 string pileKey_FirstTable = pileUsesPrefix + "_";
                 pileKey_FirstTable += pile.Symbol.Name;
@@ -82,6 +85,7 @@ namespace PilesCoords
 
                 if (Settings.sortBySlabElev_Table1)
                     pileKey_FirstTable += "_" + slabBottomElev.ToString();
+                Debug.WriteLine("Key for first table:" + pileKey_FirstTable);
 
                 if (pilesKeysAndTypes.ContainsKey(pileKey_FirstTable))
                 {
@@ -99,26 +103,6 @@ namespace PilesCoords
                     pilesKeysAndTypes.Add(pileKey_FirstTable, pType);
                 }
 
-
-
-
-                //var groups_Table2 = piles.GroupBy(p => new
-                //{
-                //    pileUsesPrefix = Support.GetPileUsesPrefix(p),
-                //    pileBottomElev = MyPile.GetPileBottomPoint(p).Z
-                //});
-
-                //foreach (var g in groups_Table2)
-                //{
-
-                //    PileType pt = new PileType();
-                //    pt.marks.AddRange(g.Select(x => x.Id.IntegerValue));
-
-                //}
-
-
-
-
                 string pileKey_SecondTable = pileUsesPrefix + "_";
                 pileKey_SecondTable += pile.Symbol.Name;
 
@@ -133,13 +117,7 @@ namespace PilesCoords
 
                 if (Settings.sortBySlabElev_Table2)
                     pileKey_SecondTable += "_" + slabBottomElev.ToString();
-
-
-                //pileKey_SecondTable += Math.Round(pileBottomElev * 304.8).ToString();
-                //pileKey_SecondTable += Math.Round(pileTopElevBeforeCut * 304.8).ToString() + "_";
-                //pileKey_SecondTable += Math.Round(pileTopElevAfterCut * 304.8).ToString() + "_";
-                //pileKey_SecondTable += Math.Round(slabBottomElev * 304.8).ToString() + "_";
-
+                Debug.WriteLine("Key for second table: " + pileKey_SecondTable);
                 if (pilesKeysAndTypesWithElev.ContainsKey(pileKey_SecondTable))
                 {
                     PileType pType = pilesKeysAndTypesWithElev[pileKey_SecondTable];
@@ -155,10 +133,10 @@ namespace PilesCoords
                     pType.usesPrefix = pileUsesPrefix;
                     pilesKeysAndTypesWithElev.Add(pileKey_SecondTable, pType);
                 }
-
             }
 
-
+            Debug.WriteLine("pilesKeysAndTypes count: " + pilesKeysAndTypes.Count.ToString());
+            Debug.WriteLine("pilesKeysAndTypesWithElev count: " + pilesKeysAndTypesWithElev.Count.ToString());
 
             using (Transaction t = new Transaction(doc))
             {
@@ -183,8 +161,8 @@ namespace PilesCoords
                     foreach (Element pile in pType.piles)
                     {
                         string range = pType.range;
-                        pile.LookupParameter(Settings.paramRange).Set(range);
-                        pile.LookupParameter("N типа рядовой (1-10)").Set(typeNumber);
+                        Support.GetParameter(pile, Settings.paramRange, true).Set(range);
+                        Support.GetParameter(pile, Settings.paramPileTypeNumber, true).Set(typeNumber);
                         pile.get_Parameter(BuiltInParameter.ALL_MODEL_IMAGE).Set(imageId);
                     }
 
@@ -200,19 +178,12 @@ namespace PilesCoords
                     foreach (Element pile in pType.piles)
                     {
                         string range = pType.range;
-                        pile.LookupParameter(Settings.paramRangeWithElevation).Set(range);
+                        Support.GetParameter(pile, Settings.paramRangeWithElevation, true).Set(range);
                     }
                 }
-
-
-
-
                 t.Commit();
             }
-
-
-
-
+            Debug.WriteLine("Success");
             return Result.Succeeded;
         }
     }

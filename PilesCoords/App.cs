@@ -36,7 +36,7 @@ namespace PilesCoords
         {
             string assemblyPath = typeof(PilesCoords.App).Assembly.Location;
             string iconsPath = Path.GetDirectoryName(assemblyPath);
-            string tabName = "Weandrevit";
+            string tabName = "BIM-STARTER DEBUG";
             try { application.CreateRibbonTab(tabName); }
             catch { }
 
@@ -47,7 +47,6 @@ namespace PilesCoords
                 assemblyPath,
                 "PilesCoords.PilesNumberingCommand")
                 ) as PushButton;
-            //btnAdd.LargeImage = new BitmapImage(new Uri(Path.Combine(iconsPath, "add.png")));
             btnAdd.ToolTip = "Нумеровать сваи по положению на плане. Нужные сваи должны быть предварительно выделены.";
 
 
@@ -57,7 +56,6 @@ namespace PilesCoords
                 assemblyPath,
                 "PilesCoords.PileCutCommand")
                 ) as PushButton;
-            //btnCut.LargeImage = new BitmapImage(new Uri(Path.Combine(iconsPath, "add.png")));
             btnCut.ToolTip = "Подрубить сваи под низ ростверка или приямка. При необходимости можно откорретировать результат вручную.";
 
             PushButton btnElevation = panel.AddItem(new PushButtonData(
@@ -66,7 +64,6 @@ namespace PilesCoords
                 assemblyPath,
                 "PilesCoords.PilesElevationCommand")
                 ) as PushButton;
-            //btnCut.LargeImage = new BitmapImage(new Uri(Path.Combine(iconsPath, "add.png")));
             btnElevation.ToolTip = "Выполнить расчет высотных отметок - низа и верха, отметки ростверка, срубки и так далее.";
 
 
@@ -76,7 +73,6 @@ namespace PilesCoords
                 assemblyPath,
                 "PilesCoords.PilesCalculateRangeCommand")
                 ) as PushButton;
-            //btnCut.LargeImage = new BitmapImage(new Uri(Path.Combine(iconsPath, "add.png")));
             btnRange.ToolTip = "Выполнить пересчет диапазонов позиций ";
 
 
@@ -86,19 +82,14 @@ namespace PilesCoords
                 assemblyPath,
                 "PilesCoords.SettingsCommand")
                 ) as PushButton;
-            //btnCut.LargeImage = new BitmapImage(new Uri(Path.Combine(iconsPath, "add.png")));
             btnSettings.ToolTip = "Настройки программы";
 
-
-
             return Result.Succeeded;
-
         }
 
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;
-
         }
     }
 }
