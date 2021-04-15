@@ -30,12 +30,16 @@ namespace PilesCoords
         {
             Debug.Listeners.Clear();
             Debug.Listeners.Add(new RbsLogger.Logger("PilesNumbering"));
+            Settings sets = null;
+            try { sets = Settings.Activate(); }
+            catch (OperationCanceledException ex) { return Result.Cancelled; }
+            sets.Save();
             Document doc = commandData.Application.ActiveUIDocument.Document;
 
             Selection sel = commandData.Application.ActiveUIDocument.Selection;
             List<Element> selems = sel.GetElementIds().Select(i => doc.GetElement(i)).ToList();
 
-            List<FamilyInstance> piles = Support.GetPiles(selems);
+            List<FamilyInstance> piles = Support.GetPiles(selems, sets);
             Debug.WriteLine("Selected piles count: " + piles.Count.ToString());
             if (piles.Count == 0)
             {
@@ -45,12 +49,12 @@ namespace PilesCoords
 
             //Сортирую по координатам
             int numberingUpDown = 1;
-            if (Settings.numberingUpDown) numberingUpDown = -1;
+            if (sets.numberingUpDown) numberingUpDown = -1;
             List<FamilyInstance> pilesSorted = piles
                 .OrderBy(x => numberingUpDown * Math.Round((x.Location as LocationPoint).Point.Y))
                 .ThenBy(x => Math.Round((x.Location as LocationPoint).Point.X))
                 .ToList();
-            Debug.WriteLine("Parameter for number: " + Settings.paramPilePosition);
+            Debug.WriteLine("Parameter for number: " + sets.paramPilePosition);
             //Указываю позиции по координатам
             using (Transaction t = new Transaction(doc))
             {
@@ -58,10 +62,11 @@ namespace PilesCoords
                 for (int i = 0; i < pilesSorted.Count; i++)
                 {
                     Element pile = pilesSorted[i];
-                    Support.GetParameter(pile, Settings.paramPilePosition, true).Set((i + 1).ToString());
+                    Support.GetParameter(pile, sets.paramPilePosition, true).Set((i + 1).ToString());
                 }
                 t.Commit();
             }
+            
             Debug.WriteLine("Numbering success");
             return Result.Succeeded;
         }

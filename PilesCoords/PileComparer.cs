@@ -28,11 +28,11 @@ namespace PilesCoords
         public int Compare(Element x, Element y)
         {
             Element elem1 = x as Element;
-            string markString1 = elem1.LookupParameter(Settings.paramPilePosition).AsString();
+            string markString1 = elem1.LookupParameter(Settings.staticParamPilePosition).AsString();
             int mark1 = int.Parse(markString1);
 
             Element elem2 = y as Element;
-            string markString2 = elem2.LookupParameter(Settings.paramPilePosition).AsString();
+            string markString2 = elem2.LookupParameter(Settings.staticParamPilePosition).AsString();
             int mark2 = int.Parse(markString2);
 
 

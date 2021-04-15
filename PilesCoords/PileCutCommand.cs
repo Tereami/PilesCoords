@@ -32,10 +32,15 @@ namespace PilesCoords
             Debug.Listeners.Add(new RbsLogger.Logger("PileCut"));
             Document doc = commandData.Application.ActiveUIDocument.Document;
 
+            Settings sets = null;
+            try { sets = Settings.Activate(); }
+            catch (OperationCanceledException ex) { return Result.Cancelled; }
+            sets.Save();
+
             Selection sel = commandData.Application.ActiveUIDocument.Selection;
             List<Element> selems = sel.GetElementIds().Select(i => doc.GetElement(i)).ToList();
 
-            List<FamilyInstance> piles = Support.GetPiles(selems);
+            List<FamilyInstance> piles = Support.GetPiles(selems, sets);
             List<Element> slabs = selems.Except(piles).ToList();
 
             if (piles.Count == 0)
@@ -62,7 +67,7 @@ namespace PilesCoords
                     Debug.WriteLine("Current pile id: " + pileElement.Id.IntegerValue.ToString());
 
                     XYZ pileBottomPoint = MyPile.GetPileBottomPoint(pile);
-                    XYZ pileTopPointBeforeCut = MyPile.GetPileTopPointBeforeCut(pile);
+                    XYZ pileTopPointBeforeCut = MyPile.GetPileTopPointBeforeCut(pile, sets);
 
                     //строю фиктивную линию для определения пересечения с плитой
                     XYZ p1 = new XYZ(pileTopPointBeforeCut.X, pileTopPointBeforeCut.Y, pileTopPointBeforeCut.Z - 3000 / 304.8);
@@ -90,13 +95,14 @@ namespace PilesCoords
 
                     XYZ slabBottomPoint = Support.GetBottomPoint(intersectPointsWithAllSlabs);
 
-                    double cutLength = pileTopPointBeforeCut.Z - slabBottomPoint.Z - (Settings.pileDepth / 304.8);
-                    Debug.WriteLine("Cut length: " + (cutLength*304.8).ToString("F2"));
-                    Support.GetParameter(pile, Settings.paramPileCutHeigth, true).Set(cutLength);
+                    double cutLength = pileTopPointBeforeCut.Z - slabBottomPoint.Z - (sets.pileDepth / 304.8);
+                    Debug.WriteLine("Cut length: " + (cutLength * 304.8).ToString("F2"));
+                    Support.GetParameter(pile, sets.paramPileCutHeigth, true).Set(cutLength);
 
                 }
                 t.Commit();
             }
+            sets.Save();
             Debug.WriteLine("Success");
             return Result.Succeeded;
         }

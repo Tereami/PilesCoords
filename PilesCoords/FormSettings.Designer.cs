@@ -52,29 +52,48 @@
             this.label2 = new System.Windows.Forms.Label();
             this.numPileDepth = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonOpenSample = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.textBoxPileTypeNumber = new System.Windows.Forms.TextBox();
+            this.textBoxPlacementElevation = new System.Windows.Forms.TextBox();
+            this.textBoxPileCutLength = new System.Windows.Forms.TextBox();
+            this.textBoxSlabBottomElev = new System.Windows.Forms.TextBox();
+            this.textBoxRangeWithElevation = new System.Windows.Forms.TextBox();
+            this.textBoxRange = new System.Windows.Forms.TextBox();
+            this.textBoxLengthAfterCut = new System.Windows.Forms.TextBox();
+            this.textBoxPileLength = new System.Windows.Forms.TextBox();
+            this.textBoxPilePosition = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.buttonHelp = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPileDepth)).BeginInit();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.checkBoxSortBySlabElev_FirstTable);
             this.groupBox1.Controls.Add(this.checkBoxSortByCutLength_FirstTable);
             this.groupBox1.Controls.Add(this.checkBoxSortByUses_FirstTable);
             this.groupBox1.Controls.Add(this.checkBoxSortByTopElev_FirstTable);
             this.groupBox1.Controls.Add(this.checkBoxSortByBottomElev_FirstTable);
             this.groupBox1.Controls.Add(this.checkBoxSortByPileType_FirstTable);
-            this.groupBox1.Location = new System.Drawing.Point(11, 198);
+            this.groupBox1.Location = new System.Drawing.Point(11, 214);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(238, 137);
+            this.groupBox1.Size = new System.Drawing.Size(249, 137);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Сортировка для \"Спецификации к схеме\"";
@@ -153,19 +172,17 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.checkBoxSortBySlabElev_Table2);
             this.groupBox2.Controls.Add(this.checkBoxSortByCutLength_Table2);
             this.groupBox2.Controls.Add(this.checkBoxSortByUses_Table2);
             this.groupBox2.Controls.Add(this.checkBoxSortByTopElev_Table2);
             this.groupBox2.Controls.Add(this.checkBoxSortByBottomElev_Table2);
             this.groupBox2.Controls.Add(this.checkBoxSortByPileType_Table2);
-            this.groupBox2.Location = new System.Drawing.Point(11, 355);
+            this.groupBox2.Location = new System.Drawing.Point(12, 355);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(238, 155);
+            this.groupBox2.Size = new System.Drawing.Size(248, 155);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Сортировка для \"Таблицы отметок\"";
@@ -250,11 +267,11 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Location = new System.Drawing.Point(168, 562);
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Location = new System.Drawing.Point(359, 525);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(2);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(81, 25);
+            this.buttonCancel.Size = new System.Drawing.Size(80, 23);
             this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -262,11 +279,10 @@
             // 
             // buttonOk
             // 
-            this.buttonOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOk.Location = new System.Drawing.Point(72, 562);
+            this.buttonOk.Location = new System.Drawing.Point(275, 525);
             this.buttonOk.Margin = new System.Windows.Forms.Padding(2);
             this.buttonOk.Name = "buttonOk";
-            this.buttonOk.Size = new System.Drawing.Size(81, 25);
+            this.buttonOk.Size = new System.Drawing.Size(80, 23);
             this.buttonOk.TabIndex = 2;
             this.buttonOk.Text = "OK";
             this.buttonOk.UseVisualStyleBackColor = true;
@@ -274,13 +290,11 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.radioNumberingUp);
             this.groupBox3.Controls.Add(this.radioNumberingDown);
             this.groupBox3.Location = new System.Drawing.Point(11, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(238, 70);
+            this.groupBox3.Size = new System.Drawing.Size(249, 70);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Нумерация";
@@ -309,30 +323,30 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.txtPileFamilyName);
             this.groupBox4.Controls.Add(this.label2);
             this.groupBox4.Controls.Add(this.numPileDepth);
             this.groupBox4.Controls.Add(this.label1);
-            this.groupBox4.Location = new System.Drawing.Point(11, 88);
+            this.groupBox4.Location = new System.Drawing.Point(12, 88);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(238, 105);
+            this.groupBox4.Size = new System.Drawing.Size(248, 112);
             this.groupBox4.TabIndex = 4;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Свая";
             // 
             // txtPileFamilyName
             // 
-            this.txtPileFamilyName.Location = new System.Drawing.Point(11, 32);
+            this.txtPileFamilyName.Location = new System.Drawing.Point(11, 34);
+            this.txtPileFamilyName.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
             this.txtPileFamilyName.Name = "txtPileFamilyName";
-            this.txtPileFamilyName.Size = new System.Drawing.Size(221, 20);
+            this.txtPileFamilyName.Size = new System.Drawing.Size(219, 20);
             this.txtPileFamilyName.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(8, 16);
+            this.label2.Margin = new System.Windows.Forms.Padding(3, 0, 3, 2);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(87, 13);
             this.label2.TabIndex = 2;
@@ -342,14 +356,13 @@
             // 
             this.numPileDepth.Location = new System.Drawing.Point(11, 79);
             this.numPileDepth.Name = "numPileDepth";
-            this.numPileDepth.Size = new System.Drawing.Size(221, 20);
+            this.numPileDepth.Size = new System.Drawing.Size(219, 20);
             this.numPileDepth.TabIndex = 1;
             this.numPileDepth.Value = new decimal(new int[] {
             50,
             0,
             0,
             0});
-            this.numPileDepth.ValueChanged += new System.EventHandler(this.numPileDepth_ValueChanged);
             // 
             // label1
             // 
@@ -359,33 +372,234 @@
             this.label1.Size = new System.Drawing.Size(134, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Заглубление в ростверк:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // button1
+            // buttonOpenSample
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(11, 524);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(238, 25);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Открыть пример";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.buttonOk_Click);
+            this.buttonOpenSample.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonOpenSample.Location = new System.Drawing.Point(12, 525);
+            this.buttonOpenSample.Name = "buttonOpenSample";
+            this.buttonOpenSample.Size = new System.Drawing.Size(249, 23);
+            this.buttonOpenSample.TabIndex = 4;
+            this.buttonOpenSample.Text = "Открыть пример";
+            this.buttonOpenSample.UseVisualStyleBackColor = true;
+            this.buttonOpenSample.Click += new System.EventHandler(this.buttonOpenSample_Click);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.textBoxPileTypeNumber);
+            this.groupBox5.Controls.Add(this.textBoxPlacementElevation);
+            this.groupBox5.Controls.Add(this.textBoxPileCutLength);
+            this.groupBox5.Controls.Add(this.textBoxSlabBottomElev);
+            this.groupBox5.Controls.Add(this.textBoxRangeWithElevation);
+            this.groupBox5.Controls.Add(this.textBoxRange);
+            this.groupBox5.Controls.Add(this.textBoxLengthAfterCut);
+            this.groupBox5.Controls.Add(this.textBoxPileLength);
+            this.groupBox5.Controls.Add(this.textBoxPilePosition);
+            this.groupBox5.Controls.Add(this.label11);
+            this.groupBox5.Controls.Add(this.label10);
+            this.groupBox5.Controls.Add(this.label9);
+            this.groupBox5.Controls.Add(this.label8);
+            this.groupBox5.Controls.Add(this.label7);
+            this.groupBox5.Controls.Add(this.label6);
+            this.groupBox5.Controls.Add(this.label5);
+            this.groupBox5.Controls.Add(this.label4);
+            this.groupBox5.Controls.Add(this.label3);
+            this.groupBox5.Location = new System.Drawing.Point(275, 12);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(249, 422);
+            this.groupBox5.TabIndex = 5;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Параметры";
+            // 
+            // textBoxPileTypeNumber
+            // 
+            this.textBoxPileTypeNumber.Location = new System.Drawing.Point(12, 387);
+            this.textBoxPileTypeNumber.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
+            this.textBoxPileTypeNumber.Name = "textBoxPileTypeNumber";
+            this.textBoxPileTypeNumber.Size = new System.Drawing.Size(229, 20);
+            this.textBoxPileTypeNumber.TabIndex = 1;
+            // 
+            // textBoxPlacementElevation
+            // 
+            this.textBoxPlacementElevation.Location = new System.Drawing.Point(12, 343);
+            this.textBoxPlacementElevation.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
+            this.textBoxPlacementElevation.Name = "textBoxPlacementElevation";
+            this.textBoxPlacementElevation.Size = new System.Drawing.Size(229, 20);
+            this.textBoxPlacementElevation.TabIndex = 1;
+            // 
+            // textBoxPileCutLength
+            // 
+            this.textBoxPileCutLength.Location = new System.Drawing.Point(12, 299);
+            this.textBoxPileCutLength.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
+            this.textBoxPileCutLength.Name = "textBoxPileCutLength";
+            this.textBoxPileCutLength.Size = new System.Drawing.Size(229, 20);
+            this.textBoxPileCutLength.TabIndex = 1;
+            // 
+            // textBoxSlabBottomElev
+            // 
+            this.textBoxSlabBottomElev.Location = new System.Drawing.Point(12, 255);
+            this.textBoxSlabBottomElev.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
+            this.textBoxSlabBottomElev.Name = "textBoxSlabBottomElev";
+            this.textBoxSlabBottomElev.Size = new System.Drawing.Size(229, 20);
+            this.textBoxSlabBottomElev.TabIndex = 1;
+            // 
+            // textBoxRangeWithElevation
+            // 
+            this.textBoxRangeWithElevation.Location = new System.Drawing.Point(12, 211);
+            this.textBoxRangeWithElevation.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
+            this.textBoxRangeWithElevation.Name = "textBoxRangeWithElevation";
+            this.textBoxRangeWithElevation.Size = new System.Drawing.Size(229, 20);
+            this.textBoxRangeWithElevation.TabIndex = 1;
+            // 
+            // textBoxRange
+            // 
+            this.textBoxRange.Location = new System.Drawing.Point(11, 167);
+            this.textBoxRange.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
+            this.textBoxRange.Name = "textBoxRange";
+            this.textBoxRange.Size = new System.Drawing.Size(230, 20);
+            this.textBoxRange.TabIndex = 1;
+            // 
+            // textBoxLengthAfterCut
+            // 
+            this.textBoxLengthAfterCut.Location = new System.Drawing.Point(11, 123);
+            this.textBoxLengthAfterCut.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
+            this.textBoxLengthAfterCut.Name = "textBoxLengthAfterCut";
+            this.textBoxLengthAfterCut.Size = new System.Drawing.Size(230, 20);
+            this.textBoxLengthAfterCut.TabIndex = 1;
+            // 
+            // textBoxPileLength
+            // 
+            this.textBoxPileLength.Location = new System.Drawing.Point(11, 79);
+            this.textBoxPileLength.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
+            this.textBoxPileLength.Name = "textBoxPileLength";
+            this.textBoxPileLength.Size = new System.Drawing.Size(230, 20);
+            this.textBoxPileLength.TabIndex = 1;
+            // 
+            // textBoxPilePosition
+            // 
+            this.textBoxPilePosition.Location = new System.Drawing.Point(11, 34);
+            this.textBoxPilePosition.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
+            this.textBoxPilePosition.Name = "textBoxPilePosition";
+            this.textBoxPilePosition.Size = new System.Drawing.Size(230, 20);
+            this.textBoxPilePosition.TabIndex = 1;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(9, 370);
+            this.label11.Margin = new System.Windows.Forms.Padding(3, 4, 3, 1);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(164, 13);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Номер условного обозначения";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(9, 326);
+            this.label10.Margin = new System.Windows.Forms.Padding(3, 4, 3, 1);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(78, 13);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Отметка сваи";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(9, 282);
+            this.label9.Margin = new System.Windows.Forms.Padding(3, 4, 3, 1);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(134, 13);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Высота срубаемой части";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(9, 238);
+            this.label8.Margin = new System.Windows.Forms.Padding(3, 4, 3, 1);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(134, 13);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Отметка низа ростверка";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 194);
+            this.label7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 1);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(217, 13);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Диапазон марок для \"Таблицы отметок\"";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(8, 150);
+            this.label6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 1);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(229, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Диапазон марок для \"Спецификации свай\"";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 106);
+            this.label5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 1);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(151, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Длина сваи после подрезки";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 62);
+            this.label4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 1);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(67, 13);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Длина сваи";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 17);
+            this.label3.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(78, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Позиция сваи";
+            // 
+            // buttonHelp
+            // 
+            this.buttonHelp.Location = new System.Drawing.Point(444, 525);
+            this.buttonHelp.Name = "buttonHelp";
+            this.buttonHelp.Size = new System.Drawing.Size(80, 23);
+            this.buttonHelp.TabIndex = 6;
+            this.buttonHelp.Text = "Справка";
+            this.buttonHelp.UseVisualStyleBackColor = true;
+            this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
             // 
             // FormSettings
             // 
+            this.AcceptButton = this.buttonOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(262, 598);
+            this.CancelButton = this.buttonCancel;
+            this.ClientSize = new System.Drawing.Size(534, 559);
+            this.Controls.Add(this.buttonHelp);
+            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.buttonOpenSample);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -399,6 +613,8 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPileDepth)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -429,6 +645,26 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtPileFamilyName;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonOpenSample;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox textBoxPileTypeNumber;
+        private System.Windows.Forms.TextBox textBoxPlacementElevation;
+        private System.Windows.Forms.TextBox textBoxPileCutLength;
+        private System.Windows.Forms.TextBox textBoxSlabBottomElev;
+        private System.Windows.Forms.TextBox textBoxRangeWithElevation;
+        private System.Windows.Forms.TextBox textBoxRange;
+        private System.Windows.Forms.TextBox textBoxLengthAfterCut;
+        private System.Windows.Forms.TextBox textBoxPileLength;
+        private System.Windows.Forms.TextBox textBoxPilePosition;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button buttonHelp;
     }
 }

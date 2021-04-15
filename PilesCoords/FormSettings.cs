@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -26,26 +27,43 @@ namespace PilesCoords
 {
     public partial class FormSettings : Form
     {
-        public FormSettings()
+        public Settings newSets = null;
+
+        public FormSettings(Settings sets)
         {
             InitializeComponent();
 
-            radioNumberingDown.Checked = Settings.numberingUpDown;
-            radioNumberingUp.Checked = !Settings.numberingUpDown;
+            newSets = sets;
 
-            numPileDepth.Value = (decimal)Settings.pileDepth;
-            txtPileFamilyName.Text = Settings.pileFamilyName;
+            radioNumberingDown.Checked = sets.numberingUpDown;
+            radioNumberingUp.Checked = !sets.numberingUpDown;
 
-            checkBoxSortByBottomElev_FirstTable.Checked = Settings.sortByBottomElev_Table1;
-            checkBoxSortByTopElev_FirstTable.Checked = Settings.sortByTopElev_Table1;
-            checkBoxSortByCutLength_FirstTable.Checked = Settings.sortByCutLength_Table1;
-            checkBoxSortBySlabElev_FirstTable.Checked = Settings.sortBySlabElev_Table1;
+            txtPileFamilyName.Text = sets.pileFamilyName;
+            numPileDepth.Value = (decimal)sets.pileDepth;
 
-            checkBoxSortByBottomElev_Table2.Checked = Settings.sortByBottomElev_Table2;
-            checkBoxSortByTopElev_Table2.Checked = Settings.sortByTopElev_Table2;
-            checkBoxSortByCutLength_Table2.Checked = Settings.sortByCutLength_Table2;
-            checkBoxSortBySlabElev_Table2.Checked = Settings.sortBySlabElev_Table2;
+            checkBoxSortByPileType_FirstTable.Checked = sets.sortByPileType_Table1;
+            checkBoxSortByUses_FirstTable.Checked = sets.sortByPileUses_Table1;
+            checkBoxSortByBottomElev_FirstTable.Checked = sets.sortByBottomElev_Table1;
+            checkBoxSortByTopElev_FirstTable.Checked = sets.sortByTopElev_Table1;
+            checkBoxSortByCutLength_FirstTable.Checked = sets.sortByCutLength_Table1;
+            checkBoxSortBySlabElev_FirstTable.Checked = sets.sortBySlabElev_Table1;
 
+            checkBoxSortByPileType_Table2.Checked = sets.sortByPileType_Table2;
+            checkBoxSortByUses_Table2.Checked = sets.sortByPileUses_Table2;
+            checkBoxSortByBottomElev_Table2.Checked = sets.sortByBottomElev_Table2;
+            checkBoxSortByTopElev_Table2.Checked = sets.sortByTopElev_Table2;
+            checkBoxSortByCutLength_Table2.Checked = sets.sortByCutLength_Table2;
+            checkBoxSortBySlabElev_Table2.Checked = sets.sortBySlabElev_Table2;
+
+            textBoxPilePosition.Text = sets.paramPilePosition;
+            textBoxPileLength.Text = sets.paramPileLength;
+            textBoxLengthAfterCut.Text = sets.paramPileLengthAfterCut;
+            textBoxRange.Text = sets.paramRange;
+            textBoxRangeWithElevation.Text = sets.paramRangeWithElevation;
+            textBoxSlabBottomElev.Text = sets.paramSlabBottomElev;
+            textBoxPileCutLength.Text = sets.paramPileCutHeigth;
+            textBoxPlacementElevation.Text = sets.paramPlacementElevation;
+            textBoxPileTypeNumber.Text = sets.paramPileTypeNumber;
         }
 
 
@@ -57,34 +75,51 @@ namespace PilesCoords
 
         private void buttonOk_Click(object sender, EventArgs e)
         {
-            Settings.numberingUpDown = radioNumberingDown.Checked;
-            Settings.pileFamilyName = txtPileFamilyName.Text;
+            newSets.numberingUpDown = radioNumberingDown.Checked;
+            newSets.pileFamilyName = txtPileFamilyName.Text;
 
-            Settings.sortByBottomElev_Table1 = checkBoxSortByBottomElev_FirstTable.Checked;
-            Settings.sortByTopElev_Table1 = checkBoxSortByTopElev_FirstTable.Checked;
-            Settings.sortByCutLength_Table1 = checkBoxSortByCutLength_FirstTable.Checked;
-            Settings.sortBySlabElev_Table1 = checkBoxSortBySlabElev_FirstTable.Checked;
+            newSets.sortByPileType_Table1 = checkBoxSortByPileType_FirstTable.Checked;
+            newSets.sortByPileUses_Table1 = checkBoxSortByUses_FirstTable.Checked;
+            newSets.sortByBottomElev_Table1 = checkBoxSortByBottomElev_FirstTable.Checked;
+            newSets.sortByTopElev_Table1 = checkBoxSortByTopElev_FirstTable.Checked;
+            newSets.sortByCutLength_Table1 = checkBoxSortByCutLength_FirstTable.Checked;
+            newSets.sortBySlabElev_Table1 = checkBoxSortBySlabElev_FirstTable.Checked;
 
-            Settings.sortByBottomElev_Table2 = checkBoxSortByBottomElev_Table2.Checked;
-            Settings.sortByTopElev_Table2 = checkBoxSortByTopElev_Table2.Checked;
-            Settings.sortByCutLength_Table2 = checkBoxSortByCutLength_Table2.Checked;
-            Settings.sortBySlabElev_Table2 = checkBoxSortBySlabElev_Table2.Checked;
+            newSets.sortByPileType_Table2 = checkBoxSortByPileType_Table2.Checked;
+            newSets.sortByPileUses_Table2 = checkBoxSortByUses_Table2.Checked;
+            newSets.sortByBottomElev_Table2 = checkBoxSortByBottomElev_Table2.Checked;
+            newSets.sortByTopElev_Table2 = checkBoxSortByTopElev_Table2.Checked;
+            newSets.sortByCutLength_Table2 = checkBoxSortByCutLength_Table2.Checked;
+            newSets.sortBySlabElev_Table2 = checkBoxSortBySlabElev_Table2.Checked;
+            newSets.pileDepth = (double)numPileDepth.Value;
 
-
-            Settings.pileDepth = (double)numPileDepth.Value;
+            newSets.paramPilePosition = textBoxPilePosition.Text;
+            newSets.paramPileLength = textBoxPileLength.Text;
+            newSets.paramPileLengthAfterCut = textBoxLengthAfterCut.Text;
+            newSets.paramRange = textBoxRange.Text;
+            newSets.paramRangeWithElevation = textBoxRangeWithElevation.Text;
+            newSets.paramSlabBottomElev = textBoxSlabBottomElev.Text;
+            newSets.paramPileCutHeigth = textBoxPileCutLength.Text;
+            newSets.paramPlacementElevation = textBoxPlacementElevation.Text;
+            newSets.paramPileTypeNumber = textBoxPileTypeNumber.Text;
 
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void buttonOpenSample_Click(object sender, EventArgs e)
         {
-
+            string appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string pileFolder = System.IO.Path.Combine(appdataPath, @"Autodesk\Revit\Addins\20xx\BimStarter\PilesCoords");
+            if(System.IO.Directory.Exists(pileFolder))
+            {
+                Process.Start("explorer.exe", pileFolder);
+            }
         }
 
-        private void numPileDepth_ValueChanged(object sender, EventArgs e)
+        private void buttonHelp_Click(object sender, EventArgs e)
         {
-
+            System.Diagnostics.Process.Start("https://bim-starter.com/plugins/piles/");
         }
     }
 }

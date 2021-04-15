@@ -32,14 +32,14 @@ namespace PilesCoords
             return pileBottomPoint;
         }
 
-        public static XYZ GetPileTopPointBeforeCut(Element pileElement)
+        public static XYZ GetPileTopPointBeforeCut(Element pileElement, Settings sets)
         {
             XYZ pileBottomPoint = MyPile.GetPileBottomPoint(pileElement);
 
             FamilyInstance _pile = pileElement as FamilyInstance;
 
             double pileLengthBeforeCut = 99999;
-            pileLengthBeforeCut = Support.GetParameter(_pile, Settings.paramPileLength).AsDouble();
+            pileLengthBeforeCut = Support.GetParameter(_pile, sets.paramPileLength).AsDouble();
 
             XYZ pileTopPointBeforeCut = new XYZ(pileBottomPoint.X, pileBottomPoint.Y, pileBottomPoint.Z + pileLengthBeforeCut);
 

@@ -30,7 +30,7 @@ namespace PilesCoords
 
     public class App : IExternalApplication
     {
-        private static UIControlledApplication ctrlApp;
+        //private static UIControlledApplication ctrlApp;
 
         public Result OnStartup(UIControlledApplication application)
         {

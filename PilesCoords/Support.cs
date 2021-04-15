@@ -74,13 +74,13 @@ namespace PilesCoords
 
 
 
-        public static List<FamilyInstance> GetPiles(List<Element> elems)
+        public static List<FamilyInstance> GetPiles(List<Element> elems, Settings sets)
         {
-            Debug.WriteLine("Search piles by name: " + Settings.pileFamilyName);
+            Debug.WriteLine("Search piles by name: " + sets.pileFamilyName);
             List<FamilyInstance> piles = elems
                 .Where(i => i is FamilyInstance)
                 .Cast<FamilyInstance>()
-                .Where(i => i.Symbol.FamilyName == Settings.pileFamilyName)
+                .Where(i => i.Symbol.FamilyName == sets.pileFamilyName)
                 .ToList();
             Debug.WriteLine("Piles found: " + piles.Count.ToString());
             return piles;

@@ -28,12 +28,24 @@ namespace PilesCoords
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            FormSettings form = new FormSettings();
-            form.ShowDialog();
-
-            if (form.DialogResult != System.Windows.Forms.DialogResult.OK)
-                return Result.Cancelled;
-
+            Settings sets = null;
+            try
+            {
+                sets = Settings.Activate(true);
+            }
+            catch(Exception ex)
+            {
+                if (ex is OperationCanceledException)
+                {
+                    return Result.Cancelled;
+                }
+            }
+            if(sets == null)
+            {
+                TaskDialog.Show("Ошибка", "Не удалось получить настройки");
+                return Result.Failed;
+            }
+            sets.Save();
             return Result.Succeeded;
         }
     }

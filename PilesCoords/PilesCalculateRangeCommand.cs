@@ -30,14 +30,19 @@ namespace PilesCoords
         {
             Debug.Listeners.Clear();
             Debug.Listeners.Add(new RbsLogger.Logger("PilesCalculateRange"));
+            Settings sets = null;
+            try { sets = Settings.Activate(); }
+            catch (OperationCanceledException ex) { return Result.Cancelled; }
+            sets.Save();
+
             Document doc = commandData.Application.ActiveUIDocument.Document;
 
             Selection sel = commandData.Application.ActiveUIDocument.Selection;
             List<Element> selems = sel.GetElementIds().Select(i => doc.GetElement(i)).ToList();
 
-            List<FamilyInstance> piles = Support.GetPiles(selems);
+            List<FamilyInstance> piles = Support.GetPiles(selems, sets);
 
-            piles = piles.OrderBy(p => int.Parse(Support.GetParameter(p, Settings.paramPilePosition).AsString())).ToList();
+            piles = piles.OrderBy(p => int.Parse(Support.GetParameter(p, sets.paramPilePosition).AsString())).ToList();
             Debug.WriteLine("Piles found: " + piles.Count.ToString());
 
             if (piles.Count == 0)
@@ -53,7 +58,7 @@ namespace PilesCoords
             foreach (FamilyInstance pile in piles)
             {
                 Debug.WriteLine("Current pile id: " + pile.Id.IntegerValue.ToString());
-                string markString = Support.GetParameter(pile, Settings.paramPilePosition).AsString();
+                string markString = Support.GetParameter(pile, sets.paramPilePosition).AsString();
 
                 Debug.WriteLine("Pile mark: " + markString);
                 int mark = int.Parse(markString);
@@ -62,28 +67,28 @@ namespace PilesCoords
 
                 double pileBottomElev =  MyPile.GetPileBottomPoint(pile).Z;
 
-                double pileLengthAfterCut = Support.GetParameter(pile, Settings.paramPileLengthAfterCut).AsDouble();
+                double pileLengthAfterCut = Support.GetParameter(pile, sets.paramPileLengthAfterCut).AsDouble();
                 double pileTopElevAfterCut = Math.Round((pileBottomElev + pileLengthAfterCut) * 304.8);
 
                 pileBottomElev = Math.Round(pileBottomElev * 304.8);
 
-                double slabBottomElev = Support.GetParameter(pile, Settings.paramSlabBottomElev).AsDouble();
+                double slabBottomElev = Support.GetParameter(pile, sets.paramSlabBottomElev).AsDouble();
                 slabBottomElev = Math.Round(slabBottomElev * 304.8);
-                double pileTopElevBeforeCut = Math.Round(MyPile.GetPileTopPointBeforeCut(pile).Z * 304.8);
+                double pileTopElevBeforeCut = Math.Round(MyPile.GetPileTopPointBeforeCut(pile, sets).Z * 304.8);
 
                 string pileKey_FirstTable = pileUsesPrefix + "_";
                 pileKey_FirstTable += pile.Symbol.Name;
 
-                if(Settings.sortByBottomElev_Table1)
+                if(sets.sortByBottomElev_Table1)
                     pileKey_FirstTable += "_" + pileBottomElev.ToString();
 
-                if (Settings.sortByTopElev_Table1)
+                if (sets.sortByTopElev_Table1)
                     pileKey_FirstTable += "_" + pileTopElevBeforeCut.ToString();
 
-                if (Settings.sortByCutLength_Table1)
+                if (sets.sortByCutLength_Table1)
                     pileKey_FirstTable += "_" + pileTopElevAfterCut.ToString();
 
-                if (Settings.sortBySlabElev_Table1)
+                if (sets.sortBySlabElev_Table1)
                     pileKey_FirstTable += "_" + slabBottomElev.ToString();
                 Debug.WriteLine("Key for first table:" + pileKey_FirstTable);
 
@@ -106,16 +111,16 @@ namespace PilesCoords
                 string pileKey_SecondTable = pileUsesPrefix + "_";
                 pileKey_SecondTable += pile.Symbol.Name;
 
-                if (Settings.sortByBottomElev_Table2)
+                if (sets.sortByBottomElev_Table2)
                     pileKey_SecondTable += "_" + pileBottomElev.ToString();
 
-                if (Settings.sortByTopElev_Table2)
+                if (sets.sortByTopElev_Table2)
                     pileKey_SecondTable += "_" + pileTopElevBeforeCut.ToString();
 
-                if (Settings.sortByCutLength_Table2)
+                if (sets.sortByCutLength_Table2)
                     pileKey_SecondTable += "_" + pileTopElevAfterCut.ToString();
 
-                if (Settings.sortBySlabElev_Table2)
+                if (sets.sortBySlabElev_Table2)
                     pileKey_SecondTable += "_" + slabBottomElev.ToString();
                 Debug.WriteLine("Key for second table: " + pileKey_SecondTable);
                 if (pilesKeysAndTypesWithElev.ContainsKey(pileKey_SecondTable))
@@ -161,8 +166,8 @@ namespace PilesCoords
                     foreach (Element pile in pType.piles)
                     {
                         string range = pType.range;
-                        Support.GetParameter(pile, Settings.paramRange, true).Set(range);
-                        Support.GetParameter(pile, Settings.paramPileTypeNumber, true).Set(typeNumber);
+                        Support.GetParameter(pile, sets.paramRange, true).Set(range);
+                        Support.GetParameter(pile, sets.paramPileTypeNumber, true).Set(typeNumber);
                         pile.get_Parameter(BuiltInParameter.ALL_MODEL_IMAGE).Set(imageId);
                     }
 
@@ -178,11 +183,12 @@ namespace PilesCoords
                     foreach (Element pile in pType.piles)
                     {
                         string range = pType.range;
-                        Support.GetParameter(pile, Settings.paramRangeWithElevation, true).Set(range);
+                        Support.GetParameter(pile, sets.paramRangeWithElevation, true).Set(range);
                     }
                 }
                 t.Commit();
             }
+            sets.Save();
             Debug.WriteLine("Success");
             return Result.Succeeded;
         }
