@@ -73,12 +73,15 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.buttonHelp = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.numericFirstNumber = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPileDepth)).BeginInit();
             this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericFirstNumber)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -89,7 +92,7 @@
             this.groupBox1.Controls.Add(this.checkBoxSortByTopElev_FirstTable);
             this.groupBox1.Controls.Add(this.checkBoxSortByBottomElev_FirstTable);
             this.groupBox1.Controls.Add(this.checkBoxSortByPileType_FirstTable);
-            this.groupBox1.Location = new System.Drawing.Point(11, 214);
+            this.groupBox1.Location = new System.Drawing.Point(11, 255);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
@@ -178,11 +181,11 @@
             this.groupBox2.Controls.Add(this.checkBoxSortByTopElev_Table2);
             this.groupBox2.Controls.Add(this.checkBoxSortByBottomElev_Table2);
             this.groupBox2.Controls.Add(this.checkBoxSortByPileType_Table2);
-            this.groupBox2.Location = new System.Drawing.Point(12, 355);
+            this.groupBox2.Location = new System.Drawing.Point(12, 399);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(248, 155);
+            this.groupBox2.Size = new System.Drawing.Size(248, 148);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Сортировка для \"Таблицы отметок\"";
@@ -267,8 +270,9 @@
             // 
             // buttonCancel
             // 
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(359, 525);
+            this.buttonCancel.Location = new System.Drawing.Point(359, 558);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(2);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(80, 23);
@@ -279,7 +283,8 @@
             // 
             // buttonOk
             // 
-            this.buttonOk.Location = new System.Drawing.Point(275, 525);
+            this.buttonOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonOk.Location = new System.Drawing.Point(275, 558);
             this.buttonOk.Margin = new System.Windows.Forms.Padding(2);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(80, 23);
@@ -292,9 +297,11 @@
             // 
             this.groupBox3.Controls.Add(this.radioNumberingUp);
             this.groupBox3.Controls.Add(this.radioNumberingDown);
+            this.groupBox3.Controls.Add(this.numericFirstNumber);
+            this.groupBox3.Controls.Add(this.label12);
             this.groupBox3.Location = new System.Drawing.Point(11, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(249, 70);
+            this.groupBox3.Size = new System.Drawing.Size(249, 114);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Нумерация";
@@ -327,9 +334,9 @@
             this.groupBox4.Controls.Add(this.label2);
             this.groupBox4.Controls.Add(this.numPileDepth);
             this.groupBox4.Controls.Add(this.label1);
-            this.groupBox4.Location = new System.Drawing.Point(12, 88);
+            this.groupBox4.Location = new System.Drawing.Point(12, 132);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(248, 112);
+            this.groupBox4.Size = new System.Drawing.Size(248, 111);
             this.groupBox4.TabIndex = 4;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Свая";
@@ -354,7 +361,7 @@
             // 
             // numPileDepth
             // 
-            this.numPileDepth.Location = new System.Drawing.Point(11, 79);
+            this.numPileDepth.Location = new System.Drawing.Point(11, 78);
             this.numPileDepth.Name = "numPileDepth";
             this.numPileDepth.Size = new System.Drawing.Size(219, 20);
             this.numPileDepth.TabIndex = 1;
@@ -367,7 +374,8 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 63);
+            this.label1.Location = new System.Drawing.Point(8, 62);
+            this.label1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(134, 13);
             this.label1.TabIndex = 0;
@@ -376,7 +384,7 @@
             // buttonOpenSample
             // 
             this.buttonOpenSample.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonOpenSample.Location = new System.Drawing.Point(12, 525);
+            this.buttonOpenSample.Location = new System.Drawing.Point(12, 558);
             this.buttonOpenSample.Name = "buttonOpenSample";
             this.buttonOpenSample.Size = new System.Drawing.Size(249, 23);
             this.buttonOpenSample.TabIndex = 4;
@@ -575,7 +583,8 @@
             // 
             // buttonHelp
             // 
-            this.buttonHelp.Location = new System.Drawing.Point(444, 525);
+            this.buttonHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonHelp.Location = new System.Drawing.Point(444, 558);
             this.buttonHelp.Name = "buttonHelp";
             this.buttonHelp.Size = new System.Drawing.Size(80, 23);
             this.buttonHelp.TabIndex = 6;
@@ -583,13 +592,40 @@
             this.buttonHelp.UseVisualStyleBackColor = true;
             this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(9, 67);
+            this.label12.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(115, 13);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "Начать нумерацию с:";
+            // 
+            // numericFirstNumber
+            // 
+            this.numericFirstNumber.Location = new System.Drawing.Point(12, 83);
+            this.numericFirstNumber.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numericFirstNumber.Name = "numericFirstNumber";
+            this.numericFirstNumber.Size = new System.Drawing.Size(219, 20);
+            this.numericFirstNumber.TabIndex = 1;
+            this.numericFirstNumber.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // FormSettings
             // 
             this.AcceptButton = this.buttonOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(534, 559);
+            this.ClientSize = new System.Drawing.Size(534, 592);
             this.Controls.Add(this.buttonHelp);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.buttonOpenSample);
@@ -615,6 +651,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numPileDepth)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericFirstNumber)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -666,5 +703,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonHelp;
+        private System.Windows.Forms.NumericUpDown numericFirstNumber;
+        private System.Windows.Forms.Label label12;
     }
 }

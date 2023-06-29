@@ -23,6 +23,7 @@ namespace PilesCoords
     public class Settings
     {
         public bool numberingUpDown = true;
+        public int firstNumber = 1;
 
         public string pileFamilyName = "201_Свая прямоугольная (Фунд)";
         public double pileDepth = 50;

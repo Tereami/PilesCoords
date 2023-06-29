@@ -37,6 +37,7 @@ namespace PilesCoords
 
             radioNumberingDown.Checked = sets.numberingUpDown;
             radioNumberingUp.Checked = !sets.numberingUpDown;
+            numericFirstNumber.Value = (decimal)sets.firstNumber;
 
             txtPileFamilyName.Text = sets.pileFamilyName;
             numPileDepth.Value = (decimal)sets.pileDepth;
@@ -77,6 +78,7 @@ namespace PilesCoords
         {
             newSets.numberingUpDown = radioNumberingDown.Checked;
             newSets.pileFamilyName = txtPileFamilyName.Text;
+            newSets.firstNumber = (int)numericFirstNumber.Value;
 
             newSets.sortByPileType_Table1 = checkBoxSortByPileType_FirstTable.Checked;
             newSets.sortByPileUses_Table1 = checkBoxSortByUses_FirstTable.Checked;

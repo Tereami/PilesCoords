@@ -62,7 +62,7 @@ namespace PilesCoords
                 for (int i = 0; i < pilesSorted.Count; i++)
                 {
                     Element pile = pilesSorted[i];
-                    Support.GetParameter(pile, sets.paramPilePosition, true).Set((i + 1).ToString());
+                    Support.GetParameter(pile, sets.paramPilePosition, true).Set((i + sets.firstNumber).ToString());
                 }
                 t.Commit();
             }
