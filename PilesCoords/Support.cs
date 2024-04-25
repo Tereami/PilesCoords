@@ -159,7 +159,7 @@ namespace PilesCoords
                 return errImg;
             }
             ImageType it = images.First();
-            Debug.WriteLine("Image is found, id: " + it.Id.IntegerValue.ToString());
+            Debug.WriteLine("Image is found, id: " + it.Id.GetElementId().ToString());
             return it;
         }
 
@@ -172,7 +172,7 @@ namespace PilesCoords
             string prefix = "Р";
             if (isAnker != 0 && isTested == 0) prefix = "А";
             if (isAnker == 0 && isTested != 0) prefix = "И";
-            Debug.WriteLine("Pile id " + pile.Id.IntegerValue.ToString() + " prefix = " + prefix);
+            Debug.WriteLine("Pile id " + pile.Id.GetElementId().ToString() + " prefix = " + prefix);
             return prefix;
         }
 
@@ -183,7 +183,7 @@ namespace PilesCoords
             string uses = "Рядовая";
             if (isAnker != 0 && isTested == 0) uses = "Анкеруемая";
             if (isAnker == 0 && isTested != 0) uses = "Подвергается стат. испытанию";
-            Debug.WriteLine("Pile id " + pile.Id.IntegerValue.ToString() + " uses = " + uses);
+            Debug.WriteLine("Pile id " + pile.Id.GetElementId().ToString() + " uses = " + uses);
             return uses;
         }
     }

@@ -57,7 +57,7 @@ namespace PilesCoords
 
             foreach (FamilyInstance pile in piles)
             {
-                Debug.WriteLine("Current pile id: " + pile.Id.IntegerValue.ToString());
+                Debug.WriteLine("Current pile id: " + pile.Id.GetElementId().ToString());
                 string markString = Support.GetParameter(pile, sets.paramPilePosition).AsString();
 
                 Debug.WriteLine("Pile mark: " + markString);

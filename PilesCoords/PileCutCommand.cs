@@ -64,7 +64,7 @@ namespace PilesCoords
                 {
                     FamilyInstance pile = pileElement as FamilyInstance;
                     if (pile == null) continue;
-                    Debug.WriteLine("Current pile id: " + pileElement.Id.IntegerValue.ToString());
+                    Debug.WriteLine("Current pile id: " + pileElement.Id.GetElementId().ToString());
 
                     XYZ pileBottomPoint = MyPile.GetPileBottomPoint(pile);
                     XYZ pileTopPointBeforeCut = MyPile.GetPileTopPointBeforeCut(pile, sets);

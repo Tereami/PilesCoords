@@ -59,7 +59,7 @@ namespace PilesCoords
                 t.Start("Отметки свай");
                 foreach (FamilyInstance pile in piles)
                 {
-                    Debug.WriteLine("Current pile id: " + pile.Id.IntegerValue.ToString());
+                    Debug.WriteLine("Current pile id: " + pile.Id.GetElementId().ToString());
                     XYZ pileTopPointBeforeCut = MyPile.GetPileTopPointBeforeCut(pile, sets);
 
                     XYZ p1 = new XYZ(pileTopPointBeforeCut.X, pileTopPointBeforeCut.Y, pileTopPointBeforeCut.Z - 3000 / 304.8);
