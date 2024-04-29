@@ -28,8 +28,8 @@ namespace PilesCoords
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            Debug.Listeners.Clear();
-            Debug.Listeners.Add(new RbsLogger.Logger("PilesNumbering"));
+            Trace.Listeners.Clear();
+            Trace.Listeners.Add(new RbsLogger.Logger("PilesNumbering"));
             Settings sets = null;
             try { sets = Settings.Activate(); }
             catch (OperationCanceledException ex) { return Result.Cancelled; }
@@ -40,7 +40,7 @@ namespace PilesCoords
             List<Element> selems = sel.GetElementIds().Select(i => doc.GetElement(i)).ToList();
 
             List<FamilyInstance> piles = Support.GetPiles(selems, sets);
-            Debug.WriteLine("Selected piles count: " + piles.Count.ToString());
+            Trace.WriteLine("Selected piles count: " + piles.Count.ToString());
             if (piles.Count == 0)
             {
                 message = "Выберите сваи.";
@@ -54,7 +54,7 @@ namespace PilesCoords
                 .OrderBy(x => numberingUpDown * Math.Round((x.Location as LocationPoint).Point.Y))
                 .ThenBy(x => Math.Round((x.Location as LocationPoint).Point.X))
                 .ToList();
-            Debug.WriteLine("Parameter for number: " + sets.paramPilePosition);
+            Trace.WriteLine("Parameter for number: " + sets.paramPilePosition);
             //Указываю позиции по координатам
             using (Transaction t = new Transaction(doc))
             {
@@ -67,7 +67,7 @@ namespace PilesCoords
                 t.Commit();
             }
             
-            Debug.WriteLine("Numbering success");
+            Trace.WriteLine("Numbering success");
             return Result.Succeeded;
         }
     }

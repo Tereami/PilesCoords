@@ -28,8 +28,8 @@ namespace PilesCoords
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            Debug.Listeners.Clear();
-            Debug.Listeners.Add(new RbsLogger.Logger("PilesCalculateRange"));
+            Trace.Listeners.Clear();
+            Trace.Listeners.Add(new RbsLogger.Logger("PilesCalculateRange"));
             Settings sets = null;
             try { sets = Settings.Activate(); }
             catch (OperationCanceledException ex) { return Result.Cancelled; }
@@ -43,7 +43,7 @@ namespace PilesCoords
             List<FamilyInstance> piles = Support.GetPiles(selems, sets);
 
             piles = piles.OrderBy(p => int.Parse(Support.GetParameter(p, sets.paramPilePosition).AsString())).ToList();
-            Debug.WriteLine("Piles found: " + piles.Count.ToString());
+            Trace.WriteLine("Piles found: " + piles.Count.ToString());
 
             if (piles.Count == 0)
             {
@@ -57,10 +57,10 @@ namespace PilesCoords
 
             foreach (FamilyInstance pile in piles)
             {
-                Debug.WriteLine("Current pile id: " + pile.Id.GetElementId().ToString());
+                Trace.WriteLine("Current pile id: " + pile.Id.GetElementId().ToString());
                 string markString = Support.GetParameter(pile, sets.paramPilePosition).AsString();
 
-                Debug.WriteLine("Pile mark: " + markString);
+                Trace.WriteLine("Pile mark: " + markString);
                 int mark = int.Parse(markString);
 
                 string pileUsesPrefix = Support.GetPileUsesPrefix(pile);
@@ -90,7 +90,7 @@ namespace PilesCoords
 
                 if (sets.sortBySlabElev_Table1)
                     pileKey_FirstTable += "_" + slabBottomElev.ToString();
-                Debug.WriteLine("Key for first table:" + pileKey_FirstTable);
+                Trace.WriteLine("Key for first table:" + pileKey_FirstTable);
 
                 if (pilesKeysAndTypes.ContainsKey(pileKey_FirstTable))
                 {
@@ -122,7 +122,7 @@ namespace PilesCoords
 
                 if (sets.sortBySlabElev_Table2)
                     pileKey_SecondTable += "_" + slabBottomElev.ToString();
-                Debug.WriteLine("Key for second table: " + pileKey_SecondTable);
+                Trace.WriteLine("Key for second table: " + pileKey_SecondTable);
                 if (pilesKeysAndTypesWithElev.ContainsKey(pileKey_SecondTable))
                 {
                     PileType pType = pilesKeysAndTypesWithElev[pileKey_SecondTable];
@@ -140,8 +140,8 @@ namespace PilesCoords
                 }
             }
 
-            Debug.WriteLine("pilesKeysAndTypes count: " + pilesKeysAndTypes.Count.ToString());
-            Debug.WriteLine("pilesKeysAndTypesWithElev count: " + pilesKeysAndTypesWithElev.Count.ToString());
+            Trace.WriteLine("pilesKeysAndTypes count: " + pilesKeysAndTypes.Count.ToString());
+            Trace.WriteLine("pilesKeysAndTypesWithElev count: " + pilesKeysAndTypesWithElev.Count.ToString());
 
             using (Transaction t = new Transaction(doc))
             {
@@ -189,7 +189,7 @@ namespace PilesCoords
                 t.Commit();
             }
             sets.Save();
-            Debug.WriteLine("Success");
+            Trace.WriteLine("Success");
             return Result.Succeeded;
         }
     }

@@ -28,8 +28,8 @@ namespace PilesCoords
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            Debug.Listeners.Clear();
-            Debug.Listeners.Add(new RbsLogger.Logger("PilesElevation"));
+            Trace.Listeners.Clear();
+            Trace.Listeners.Add(new RbsLogger.Logger("PilesElevation"));
             Settings sets = null;
             try { sets = Settings.Activate(); }
             catch (OperationCanceledException ex) { return Result.Cancelled; }
@@ -42,7 +42,7 @@ namespace PilesCoords
 
             List<FamilyInstance> piles = Support.GetPiles(selems, sets);
             List<Element> slabs = selems.Except(piles).ToList();
-            Debug.WriteLine("Piles count: " + piles.Count.ToString() + ", slabs count: " + slabs.Count.ToString());
+            Trace.WriteLine("Piles count: " + piles.Count.ToString() + ", slabs count: " + slabs.Count.ToString());
             if (piles.Count == 0)
             {
                 message = "Выберите сваи.";
@@ -59,7 +59,7 @@ namespace PilesCoords
                 t.Start("Отметки свай");
                 foreach (FamilyInstance pile in piles)
                 {
-                    Debug.WriteLine("Current pile id: " + pile.Id.GetElementId().ToString());
+                    Trace.WriteLine("Current pile id: " + pile.Id.GetElementId().ToString());
                     XYZ pileTopPointBeforeCut = MyPile.GetPileTopPointBeforeCut(pile, sets);
 
                     XYZ p1 = new XYZ(pileTopPointBeforeCut.X, pileTopPointBeforeCut.Y, pileTopPointBeforeCut.Z - 3000 / 304.8);
@@ -80,7 +80,7 @@ namespace PilesCoords
                     }
 
                     XYZ slabBottomPoint = Support.GetBottomPoint(intersectPointsWithAllSlabs);
-                    Debug.WriteLine("SlabBottomPoint Z = " + (slabBottomPoint.Z * 304.8).ToString("F1"));
+                    Trace.WriteLine("SlabBottomPoint Z = " + (slabBottomPoint.Z * 304.8).ToString("F1"));
                     Parameter elevParam = pile.LookupParameter(sets.paramSlabBottomElev);
                     if(elevParam == null)
                     {
@@ -93,11 +93,11 @@ namespace PilesCoords
                     try
                     {
                         XYZ pileBottomPoint = MyPile.GetPileBottomPoint(pile);
-                        Debug.WriteLine("Pile bottom elevation: " + (pileBottomPoint.Z * 304.8).ToString("F2"));
+                        Trace.WriteLine("Pile bottom elevation: " + (pileBottomPoint.Z * 304.8).ToString("F2"));
                         Parameter pileElevParam = pile.LookupParameter(sets.paramPlacementElevation);
                         if(pileElevParam == null)
                         {
-                            Debug.WriteLine("No parameter: " + sets.paramPlacementElevation);
+                            Trace.WriteLine("No parameter: " + sets.paramPlacementElevation);
                         }
                         else
                         {
@@ -106,13 +106,13 @@ namespace PilesCoords
                     }
                     catch(Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);
+                        Trace.WriteLine(ex.Message);
                     }
                 }
                 t.Commit();
             }
             sets.Save();
-            Debug.WriteLine("Piles elevation succeded");
+            Trace.WriteLine("Piles elevation succeded");
             return Result.Succeeded;
         }
     }

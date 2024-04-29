@@ -28,8 +28,8 @@ namespace PilesCoords
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            Debug.Listeners.Clear();
-            Debug.Listeners.Add(new RbsLogger.Logger("PileCut"));
+            Trace.Listeners.Clear();
+            Trace.Listeners.Add(new RbsLogger.Logger("PileCut"));
             Document doc = commandData.Application.ActiveUIDocument.Document;
 
             Settings sets = null;
@@ -46,13 +46,13 @@ namespace PilesCoords
             if (piles.Count == 0)
             {
                 message = "Выберите сваи.";
-                Debug.WriteLine("Piles arent selected");
+                Trace.WriteLine("Piles arent selected");
                 return Result.Failed;
             }
             if (slabs.Count == 0)
             {
                 message = "Выберите ростверк";
-                Debug.WriteLine("Foundations arent selected");
+                Trace.WriteLine("Foundations arent selected");
                 return Result.Failed;
             }
 
@@ -64,7 +64,7 @@ namespace PilesCoords
                 {
                     FamilyInstance pile = pileElement as FamilyInstance;
                     if (pile == null) continue;
-                    Debug.WriteLine("Current pile id: " + pileElement.Id.GetElementId().ToString());
+                    Trace.WriteLine("Current pile id: " + pileElement.Id.GetElementId().ToString());
 
                     XYZ pileBottomPoint = MyPile.GetPileBottomPoint(pile);
                     XYZ pileTopPointBeforeCut = MyPile.GetPileTopPointBeforeCut(pile, sets);
@@ -89,21 +89,21 @@ namespace PilesCoords
 
                     if (intersectPointsWithAllSlabs.Count == 0)
                     {
-                        Debug.WriteLine("No intersects with foundation");
+                        Trace.WriteLine("No intersects with foundation");
                         continue;
                     }
 
                     XYZ slabBottomPoint = Support.GetBottomPoint(intersectPointsWithAllSlabs);
 
                     double cutLength = pileTopPointBeforeCut.Z - slabBottomPoint.Z - (sets.pileDepth / 304.8);
-                    Debug.WriteLine("Cut length: " + (cutLength * 304.8).ToString("F2"));
+                    Trace.WriteLine("Cut length: " + (cutLength * 304.8).ToString("F2"));
                     Support.GetParameter(pile, sets.paramPileCutHeigth, true).Set(cutLength);
 
                 }
                 t.Commit();
             }
             sets.Save();
-            Debug.WriteLine("Success");
+            Trace.WriteLine("Success");
             return Result.Succeeded;
         }
     }

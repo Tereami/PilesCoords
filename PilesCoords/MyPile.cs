@@ -43,7 +43,7 @@ namespace PilesCoords
 
             XYZ pileTopPointBeforeCut = new XYZ(pileBottomPoint.X, pileBottomPoint.Y, pileBottomPoint.Z + pileLengthBeforeCut);
 
-            Debug.WriteLine("Pile top point before cut Z=" + (pileTopPointBeforeCut.Z * 304.8).ToString());
+            Trace.WriteLine("Pile top point before cut Z=" + (pileTopPointBeforeCut.Z * 304.8).ToString());
             return pileTopPointBeforeCut;
         }
     }

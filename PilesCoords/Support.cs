@@ -35,12 +35,12 @@ namespace PilesCoords
                 param = etype.LookupParameter(paramname);
                 if (param == null)
                 {
-                    Debug.WriteLine("No parameter: " + paramname);
+                    Trace.WriteLine("No parameter: " + paramname);
                 }
             }
             if(checkForWritable && param.IsReadOnly)
             {
-                Debug.WriteLine("Parameter is readonly: " + paramname);
+                Trace.WriteLine("Parameter is readonly: " + paramname);
             }
             return param;
         }
@@ -76,13 +76,13 @@ namespace PilesCoords
 
         public static List<FamilyInstance> GetPiles(List<Element> elems, Settings sets)
         {
-            Debug.WriteLine("Search piles by name: " + sets.pileFamilyName);
+            Trace.WriteLine("Search piles by name: " + sets.pileFamilyName);
             List<FamilyInstance> piles = elems
                 .Where(i => i is FamilyInstance)
                 .Cast<FamilyInstance>()
                 .Where(i => i.Symbol.FamilyName == sets.pileFamilyName)
                 .ToList();
-            Debug.WriteLine("Piles found: " + piles.Count.ToString());
+            Trace.WriteLine("Piles found: " + piles.Count.ToString());
             return piles;
         }
 
@@ -101,7 +101,7 @@ namespace PilesCoords
 
                 keysAndRange.Add(key, range);
             }
-            Debug.WriteLine("Mark ranges are created by keys: " + keysAndRange.Count.ToString());
+            Trace.WriteLine("Mark ranges are created by keys: " + keysAndRange.Count.ToString());
             return keysAndRange;
         }
 
@@ -128,19 +128,19 @@ namespace PilesCoords
                 }
             }
             range += marks[marks.Count - 1];
-            Debug.WriteLine("Marks range: " + range);
+            Trace.WriteLine("Marks range: " + range);
             return range;
         }
 
         public static ImageType GetImageTypeByName(Document doc, string name)
         {
-            Debug.WriteLine("Try to get image by name: " + name);
+            Trace.WriteLine("Try to get image by name: " + name);
             List<ImageType> images = new FilteredElementCollector(doc)
                 .OfClass(typeof(ImageType))
                 .Cast<ImageType>()
                 .Where(i => i.Name.Equals(name))
                 .ToList();
-            Debug.WriteLine("Try to find image by name: " + name + ", found: " + images.Count.ToString());
+            Trace.WriteLine("Try to find image by name: " + name + ", found: " + images.Count.ToString());
             if (images.Count == 0)
             {
                 List<ImageType> errImgs = new FilteredElementCollector(doc)
@@ -151,7 +151,7 @@ namespace PilesCoords
                 if (errImgs.Count == 0)
                 {
                     System.Windows.Forms.MessageBox.Show("Загрузите в проект картинки для свай!");
-                    Debug.WriteLine("Unable to find image Ошибка.png");
+                    Trace.WriteLine("Unable to find image Ошибка.png");
                     throw new Exception("Unable to find image Ошибка.png");
                 }
 
@@ -159,7 +159,7 @@ namespace PilesCoords
                 return errImg;
             }
             ImageType it = images.First();
-            Debug.WriteLine("Image is found, id: " + it.Id.GetElementId().ToString());
+            Trace.WriteLine("Image is found, id: " + it.Id.GetElementId().ToString());
             return it;
         }
 
@@ -172,7 +172,7 @@ namespace PilesCoords
             string prefix = "Р";
             if (isAnker != 0 && isTested == 0) prefix = "А";
             if (isAnker == 0 && isTested != 0) prefix = "И";
-            Debug.WriteLine("Pile id " + pile.Id.GetElementId().ToString() + " prefix = " + prefix);
+            Trace.WriteLine("Pile id " + pile.Id.GetElementId().ToString() + " prefix = " + prefix);
             return prefix;
         }
 
@@ -183,7 +183,7 @@ namespace PilesCoords
             string uses = "Рядовая";
             if (isAnker != 0 && isTested == 0) uses = "Анкеруемая";
             if (isAnker == 0 && isTested != 0) uses = "Подвергается стат. испытанию";
-            Debug.WriteLine("Pile id " + pile.Id.GetElementId().ToString() + " uses = " + uses);
+            Trace.WriteLine("Pile id " + pile.Id.GetElementId().ToString() + " uses = " + uses);
             return uses;
         }
     }
