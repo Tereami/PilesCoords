@@ -11,11 +11,11 @@ This code is provided 'as is'. Author disclaims any implied warranty.
 Zuev Aleksandr, 2020, all rigths reserved.*/
 #endregion
 #region Usings
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Diagnostics;
-using Autodesk.Revit.DB;
+using System.Linq;
 #endregion
 
 namespace PilesCoords
@@ -29,7 +29,7 @@ namespace PilesCoords
         public static Parameter GetParameter(Element elem, string paramname, bool checkForWritable = false)
         {
             Parameter param = elem.LookupParameter(paramname);
-            if(param == null)
+            if (param == null)
             {
                 ElementType etype = elem.Document.GetElement(elem.GetTypeId()) as ElementType;
                 param = etype.LookupParameter(paramname);
@@ -38,7 +38,7 @@ namespace PilesCoords
                     Trace.WriteLine("No parameter: " + paramname);
                 }
             }
-            if(checkForWritable && param.IsReadOnly)
+            if (checkForWritable && param.IsReadOnly)
             {
                 Trace.WriteLine("Parameter is readonly: " + paramname);
             }
@@ -77,10 +77,11 @@ namespace PilesCoords
         public static List<FamilyInstance> GetPiles(List<Element> elems, Settings sets)
         {
             Trace.WriteLine("Search piles by name: " + sets.pileFamilyName);
+            string[] famNames = sets.pileFamilyName.Split(';');
             List<FamilyInstance> piles = elems
                 .Where(i => i is FamilyInstance)
                 .Cast<FamilyInstance>()
-                .Where(i => i.Symbol.FamilyName == sets.pileFamilyName)
+                .Where(i => famNames.Contains(i.Symbol.FamilyName))
                 .ToList();
             Trace.WriteLine("Piles found: " + piles.Count.ToString());
             return piles;

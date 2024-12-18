@@ -12,8 +12,8 @@ Zuev Aleksandr, 2020, all rigths reserved.*/
 #endregion
 #region Usings
 using System;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
 using System.Xml.Serialization;
 #endregion
 
@@ -25,9 +25,9 @@ namespace PilesCoords
         public bool numberingUpDown = true;
         public int firstNumber = 1;
 
-        public string pileFamilyName = "201_Свая прямоугольная (Фунд)";
+        public string pileFamilyName = "201_Свая прямоугольная (Фунд_Ур)";
         public double pileDepth = 50;
-        
+
         public string paramPilePosition = "О_Позиция";
         public static string staticParamPilePosition = "О_Позиция";
 
@@ -98,7 +98,7 @@ namespace PilesCoords
                 Trace.WriteLine("Settings is null, create new one");
                 newSettingsCreated = true;
             }
-            if(newSettingsCreated || forceShowSettingsWindow)
+            if (newSettingsCreated || forceShowSettingsWindow)
             {
                 FormSettings form = new FormSettings(sets);
                 Trace.WriteLine("Show settings form");
@@ -110,7 +110,7 @@ namespace PilesCoords
                 }
                 sets = form.newSets;
             }
-            
+
             Settings.staticParamPilePosition = sets.paramPilePosition;
             Trace.WriteLine("Settings success");
             return sets;

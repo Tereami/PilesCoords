@@ -47,6 +47,8 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.radioNumberingUp = new System.Windows.Forms.RadioButton();
             this.radioNumberingDown = new System.Windows.Forms.RadioButton();
+            this.numericFirstNumber = new System.Windows.Forms.NumericUpDown();
+            this.label12 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.txtPileFamilyName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -73,15 +75,13 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.buttonHelp = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
-            this.numericFirstNumber = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericFirstNumber)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPileDepth)).BeginInit();
             this.groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericFirstNumber)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -328,6 +328,33 @@
             this.radioNumberingDown.Text = "Из левого верхнего угла";
             this.radioNumberingDown.UseVisualStyleBackColor = true;
             // 
+            // numericFirstNumber
+            // 
+            this.numericFirstNumber.Location = new System.Drawing.Point(12, 83);
+            this.numericFirstNumber.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numericFirstNumber.Name = "numericFirstNumber";
+            this.numericFirstNumber.Size = new System.Drawing.Size(219, 20);
+            this.numericFirstNumber.TabIndex = 1;
+            this.numericFirstNumber.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(9, 67);
+            this.label12.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(115, 13);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "Начать нумерацию с:";
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.txtPileFamilyName);
@@ -355,9 +382,9 @@
             this.label2.Location = new System.Drawing.Point(8, 16);
             this.label2.Margin = new System.Windows.Forms.Padding(3, 0, 3, 2);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(87, 13);
+            this.label2.Size = new System.Drawing.Size(212, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Имя семейства";
+            this.label2.Text = "Имя семейства (или несколько через ; )";
             // 
             // numPileDepth
             // 
@@ -592,33 +619,6 @@
             this.buttonHelp.UseVisualStyleBackColor = true;
             this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(9, 67);
-            this.label12.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(115, 13);
-            this.label12.TabIndex = 0;
-            this.label12.Text = "Начать нумерацию с:";
-            // 
-            // numericFirstNumber
-            // 
-            this.numericFirstNumber.Location = new System.Drawing.Point(12, 83);
-            this.numericFirstNumber.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numericFirstNumber.Name = "numericFirstNumber";
-            this.numericFirstNumber.Size = new System.Drawing.Size(219, 20);
-            this.numericFirstNumber.TabIndex = 1;
-            this.numericFirstNumber.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
             // FormSettings
             // 
             this.AcceptButton = this.buttonOk;
@@ -646,12 +646,12 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericFirstNumber)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPileDepth)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericFirstNumber)).EndInit();
             this.ResumeLayout(false);
 
         }
